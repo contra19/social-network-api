@@ -19,4 +19,4 @@ mongoose.connection.once('open', () => {
 });
 
 app.use('/api', require('./routes/userRoutes.js'));
-app.use('/api', require('./routes/thoughtRoutes'));
+app.use('/api', require('./routes/thoughtRoutes.js'));

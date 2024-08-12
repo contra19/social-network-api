@@ -1,21 +1,33 @@
-// seed.js
+// import mongoose and models
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Thought = require('./models/Thought');
 
+// Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/socialNetwork')
   .then(() => {
     console.log('MongoDB connected');
-    seedDatabase();
+    truncateDatabase();  // Truncate the database first
   })
   .catch(err => console.log(err));
 
-const seedDatabase = async () => {
+// Truncate the database
+const truncateDatabase = async () => {
   try {
-    // Clear existing data
+    // Truncate (clear) all collections
     await User.deleteMany({});
     await Thought.deleteMany({});
 
+    console.log('Database truncated');
+    seedDatabase();  // After truncating, proceed to seed
+  } catch (err) {
+    console.log('Error truncating database:', err);
+  }
+};
+
+// Seed the database
+const seedDatabase = async () => {
+  try {
     // Create Users
     const users = await User.insertMany([
       { username: 'aliceSmith', email: 'alice.smith@example.com' },
@@ -81,7 +93,7 @@ const seedDatabase = async () => {
     await User.findByIdAndUpdate(users[3]._id, { $addToSet: { friends: [users[1]._id, users[4]._id] } });
     await User.findByIdAndUpdate(users[4]._id, { $addToSet: { friends: [users[2]._id, users[3]._id] } });
 
-    console.log('Database seeded with legit-looking data!');
+    console.log('Database seeded with test data!');
   } catch (err) {
     console.log(err);
   } finally {

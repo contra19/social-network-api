@@ -1,3 +1,4 @@
+// import express and create a router
 const express = require('express');
 const router = express.Router();
 const Thought = require('../models/Thought');
@@ -100,4 +101,5 @@ router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
   }
 });
 
+// export the router
 module.exports = router;

@@ -1,4 +1,4 @@
-// routes/userRoutes.js
+// import express and create a router
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -92,4 +92,5 @@ router.delete('/:userId/friends/:friendId', async (req, res) => {
   }
 });
 
+// export the router
 module.exports = router;

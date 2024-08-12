@@ -1,5 +1,7 @@
+// import mongoose
 const mongoose = require('mongoose');
 
+// create a reaction schema
 const reactionSchema = new mongoose.Schema({
   reactionId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -17,7 +19,17 @@ const reactionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    get: timestamp => new Date(timestamp).toLocaleString(),
+    get: timestamp => {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+      }).format(new Date(timestamp));
+    },
   },
 }, {
   toJSON: {
@@ -26,4 +38,5 @@ const reactionSchema = new mongoose.Schema({
   id: false,
 });
 
+// create the Reaction model using the reactionSchema
 module.exports = reactionSchema;
